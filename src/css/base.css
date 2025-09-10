@@ -1,0 +1,84 @@
+:root {
+    --primary-color: #0d6efd;
+    --primary-color-light: #0d6efd;
+    --primary-color-dark: #0a58ca;
+    --backgroundColor: #191D23;
+}
+
+li.ant-menu-item.ant-menu-item-selected {
+    background-color: #333333;
+    /* background-image: linear-gradient(to left top, #ffffff, #dbd8fd, #b1b4fb, #7c92f9, #0074f7); */
+    /* box-shadow:0 20px 27px 0 rgba(0, 0, 0, 0.05) ; */
+    font-weight: 500 !important;
+    color: #fff !important;
+}
+
+.table-dark-mode li.ant-menu-item {
+    color: var(--textColor) !important;
+}
+
+.table-dark-mode .ant-table {
+    background-color: var(--backgroundColor);
+    color: var(--textColor);
+}
+
+.table-light-mode .ant-table-thead>tr>th {
+    background-color: #333333 !important;
+    color: #fff !important;
+    /* background: linear-gradient(270deg, rgba(132,102,140,1) 0%, rgba(103,80,109,1) 100%); */
+    /* box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px !important; */
+}
+
+.table-dark-mode .ant-table-thead>tr>th {
+    /* background-color: var(--backgroundColor); */
+    background-color: #333333;
+    color: var(--textColor);
+    border-color: var(--boxShadow);
+   
+}
+
+.table-dark-mode .ant-table-tbody>tr>td {
+    background-color: var(--backgroundColor);
+    color: var(--textColor);
+    border-color: var(--boxShadow);
+}
+
+/* Adjust pagination styles if needed */
+.table-dark-mode .ant-pagination {
+    color: var(--textColor);
+}
+
+
+.table-dark-mode .ant-modal-content {
+    background-color: var(--backgroundColor);
+}
+
+.table-dark-mode .ant-modal-header {
+    background-color: var(--backgroundColor);
+}
+
+.table-dark-mode .ant-modal-title {
+    color: #fff !important;
+}
+
+.table-dark-mode label.ant-form-item-required {
+    color: #fff !important;
+}
+
+
+.ant-table-wrapper .ant-table-tbody
+.ant-table-row >.ant-table-cell-row-hover {
+    background:none !important;
+}
+
+.ant-switch.ant-switch-checked {
+    background-color: #333333 !important;
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-sub.ant-menu-inline{
+    background: white !important;
+}
+
+i.ant-menu-submenu-arrow {
+    color: #000 !important;
+}
