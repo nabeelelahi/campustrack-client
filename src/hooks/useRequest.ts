@@ -149,5 +149,6 @@ export function useRequest<T>(
     setData,
     pagination,
     onPaginationChange,
+    service
   };
 }

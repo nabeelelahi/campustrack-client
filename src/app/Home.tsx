@@ -5,7 +5,7 @@ import { Row } from "antd";
 import Statistics from "../component/partial/Statistics";
 import { statistics } from "../config/dummy-data/home";
 // import { PieChart } from "react-minimal-pie-chart";
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 import Text from "../component/higherOrder/Text";
 import { userColumns } from "../config";
 import CustomTable from "../component/shared/Table";

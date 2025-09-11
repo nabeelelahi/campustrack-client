@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Form, Input, Button, Switch, Typography } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 
 const { Title } = Typography;
 

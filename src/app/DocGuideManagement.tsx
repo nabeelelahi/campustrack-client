@@ -1,4 +1,4 @@
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 import CustomTable from "../component/shared/Table";
 import AddDocGuide from "../component/partial/Modals/AddDocGuide";
 import { docGuideColumns } from "../config/table/docGuide";

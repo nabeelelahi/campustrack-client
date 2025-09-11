@@ -1,4 +1,4 @@
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 import CustomTable from "../component/shared/Table";
 import AddArticleModal from "../component/partial/Modals/AddArticle";
 import { articleColumns } from "../config/table/article";

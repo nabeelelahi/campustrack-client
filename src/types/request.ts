@@ -1,6 +1,7 @@
 import { TablePaginationConfig } from "antd";
 import { AxiosRequestHeaders } from "axios";
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { RequestSingleton } from "../repositories";
 
 export type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
@@ -31,6 +32,7 @@ export type UseRequestReturn<T> = {
   setData: Dispatch<SetStateAction<T>>;
   pagination: TablePaginationConfig | null;
   onPaginationChange: (e: TablePaginationConfig) => void;
+  service: RequestSingleton
 };
 
 export type ResponseError = {

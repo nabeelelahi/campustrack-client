@@ -82,3 +82,7 @@ li.ant-menu-item.ant-menu-item-selected {
 i.ant-menu-submenu-arrow {
     color: #000 !important;
 }
+
+.ant-select-selection-placeholder{
+    color: #000 !important;
+}

@@ -4,7 +4,7 @@ import { menu } from './sidebarLink'
 // import DarkModeToggle from "react-dark-mode-toggle";
 import { Header } from 'antd/es/layout/layout';
 // import { useTheme } from '../../../context/Themeprovider';
-import { useColors } from '../../../config/color';
+import { useColors } from '../../../../config/color';
 
 
 type Props = {

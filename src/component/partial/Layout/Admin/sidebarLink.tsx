@@ -1,11 +1,11 @@
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useColors } from "../../../config/color";
+import { useColors } from "../../../../config/color";
 import { MenuProps } from "antd";
 import { useState } from "react";
-import { menuItems } from "../../../config";
-import { useTheme } from "../../../context/Themeprovider";
+import { menuItems } from "../../../../config";
+import { useTheme } from "../../../../context/Themeprovider";
 
 export const renderMenu = () => {
   const colors = useColors();

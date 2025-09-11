@@ -1,4 +1,4 @@
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 
 function NotificationManagment() {
   return (

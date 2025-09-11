@@ -28,9 +28,11 @@ export const useAuth = () => {
       .setBody({ ...values, device: "web", device_token: "1234567890" }, "json")
       .onSuccess((data, headers) => {
         setLoading(false);
-        setStorageData("user", data);
+        // @ts-ignore
+        setStorageData("user", data.data);
         localStorage.setItem("access-token", headers["access-token"]);
-        navigate("/dashboard");
+        // @ts-ignore
+        navigate(`/${data.data['role']}/dashboard`);
       })
       // @ts-expect-error @ts-ignore
       .onFailure(handleFailure)

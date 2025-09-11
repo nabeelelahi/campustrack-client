@@ -2,7 +2,7 @@ import React from 'react'
 import { CloseOutlined } from '@ant-design/icons'
 import { Drawer } from 'antd'
 import { renderMenu } from './sidebarLink'
-import { useColors } from '../../../config/color';
+import { useColors } from '../../../../config/color';
 
 
 function Drawers({ drawerVisible, setDrawerVisible }: any) {

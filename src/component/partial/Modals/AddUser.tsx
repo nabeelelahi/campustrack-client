@@ -13,6 +13,7 @@ function AddUserModal(props: AddModalProps) {
     const { open, cbCancel, updateData } = props;
     const { handleFinish, loading } = useFormOperations({ ...props, url: 'user' });
     const [classes, setClasses] = useState<{ name: string, value: string }[]>([])
+    const [parents, setParents] = useState<{ name: string, value: string }[]>([])
     const [inputLoading, setInputLoading] = useState(false)
     const [showClasses, setShowClasses] = useState(false)
 
@@ -20,21 +21,32 @@ function AddUserModal(props: AddModalProps) {
         handleFinish({ ...values, password: 'CampusTrack@123' })
     }
 
-    const onRoleChange = (value: string) => {
+    const onRoleChange = async (value: string) => {
         if (value === 'student') {
             setShowClasses(true)
-            if(classes.length) return 
-            setInputLoading(true)
-            request('class', 'GET')
-                .setParams({ limit: 100 })
-                .onSuccess((res: any) => {
-                    setInputLoading(false)
-                    setClasses(res.data?.map((i: any) => ({ label: i.name, value: i._id })))
-                    console.log(res.data)
-                })
-                .call()
+            if (classes.length) return
+            setInputLoading(true);
+            try {
+                await request('class', 'GET')
+                    .setParams({ limit: 100 })
+                    .onSuccess((res: any) => {
+                        setClasses(res.data?.map((i: any) => ({ label: i.name, value: i._id })))
+                        console.log(res.data)
+                    })
+                    .call()
+                await request('user?role=parent', 'GET')
+                    .setParams({ limit: 100 })
+                    .onSuccess((res: any) => {
+                        setParents(res.data?.map((i: any) => ({ label: i.name, value: i._id })))
+                        console.log(res.data)
+                    })
+                    .call()
+            }
+            finally {
+                setInputLoading(false)
+            }
         }
-        else{
+        else {
             setShowClasses(false)
         }
     }
@@ -71,19 +83,34 @@ function AddUserModal(props: AddModalProps) {
                             inputLoading ?
                                 <Loader />
                                 :
-                                <Form.Item
-                                    label={'Assign Classes'}
-                                    name={'classes'}
-                                    rules={[]}
-                                >
-                                    <Select
-                                        allowClear
-                                        mode="multiple"
-                                        className='!rounded-[10px] h-[44px]'
-                                        style={{ width: '100%' }}
-                                        options={classes}
-                                    />
-                                </Form.Item>
+                                <>
+                                    <Form.Item
+                                        label={'Assign a Parent'}
+                                        name={'parent'}
+                                        rules={[
+                                            { required: true, message: 'Assigning a parent to a student is compulsory!' }
+                                        ]}
+                                    >
+                                        <Select
+                                            className='!rounded-[10px] h-[44px]'
+                                            style={{ width: '100%' }}
+                                            options={parents}
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        label={'Assign Classes'}
+                                        name={'classes'}
+                                        rules={[]}
+                                    >
+                                        <Select
+                                            allowClear
+                                            mode="multiple"
+                                            className='!rounded-[10px] h-[44px]'
+                                            style={{ width: '100%' }}
+                                            options={classes}
+                                        />
+                                    </Form.Item>
+                                </>
                         }
                     </>
                 }

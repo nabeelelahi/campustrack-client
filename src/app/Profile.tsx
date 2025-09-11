@@ -10,7 +10,7 @@ import moment from "moment";
 import { useColors } from "../config/color";
 import CustomInput from "../component/shared/CustomInput";
 import CustomButton from "../component/shared/CustomButton";
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 
 interface ProfileProps {
   user: {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Layout } from "antd";
-import { useColors } from "../../../config/color";
+import { useColors } from "../../../../config/color";
 import Headers from "./Header";
 import Sidebar from "./Sidebar";
 import Drawers from "./Drawer";

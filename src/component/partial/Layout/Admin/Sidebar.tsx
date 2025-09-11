@@ -1,7 +1,7 @@
 import React from "react";
 import Sider from "antd/es/layout/Sider";
 import { renderMenu } from "./sidebarLink";
-import { useColors } from "../../../config/color";
+import { useColors } from "../../../../config/color";
 
 function Sidebar({ collapsed, setCollapsed }: any) {
   const colors = useColors();

@@ -1,6 +1,6 @@
 export const menuItems = [
   {
-    key: "/dashboard",
+    key: "/admin/dashboard",
     label: "Dashboard",
   },
   {

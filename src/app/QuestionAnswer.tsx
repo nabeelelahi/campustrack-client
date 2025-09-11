@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Input } from "antd";
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 import { QuestionAnswerDto, ResponseData } from "../types";
 import QuestionCard from "../component/partial/QuestionAnswer/QuestionCard";
 import { useRequest } from "../hooks/useRequest";

@@ -1,4 +1,4 @@
-import LayoutAdmin from "../component/partial/Layout";
+import LayoutAdmin from "../component/partial/Layout/Admin";
 import { passportColumns } from "../config/table/passport";
 import CustomTable from "../component/shared/Table";
 import useTableOperations from "../hooks/useTableOperations";

@@ -15,7 +15,8 @@ type CustomTableProps = {
   onClick?: (record: any) => void;
   onButtonClick?: () => void;
   buttonText?: string;
-  data: any
+  data: any,
+  filterOptions?: React.JSX.Element
 };
 
 const CustomTable = ({
@@ -27,7 +28,8 @@ const CustomTable = ({
   onClick,
   onButtonClick,
   buttonText,
-  data
+  data,
+  filterOptions
 }: CustomTableProps) => {
   const colors = useColors();
   const { isDarkMode } = useTheme();
@@ -36,6 +38,7 @@ const CustomTable = ({
     <div>
       <div className="flex justify-between items-center mb-4">
         <Text text={title ?? ""} className="text-2xl  roboto-semibold" />
+        {filterOptions ? filterOptions : null}
         {buttonText && (
           <CustomButton
             color={colors.primary}
