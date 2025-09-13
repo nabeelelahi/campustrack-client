@@ -1,8 +1,7 @@
-import { Switch } from "antd";
+import { Button, Switch } from "antd";
 import { request } from "../../repositories";
-import { EditOutlined } from '@ant-design/icons'
 
-export const userColumns = (onEditClick: (params: { [key: string]: never }) => void, hideActions?: boolean) => {
+export const userColumns = (onEditClick: (params: { [key: string]: never }) => void, onViewClick: (params: any) => void, hideActions?: boolean) => {
   const onSwithClick = (record: { [key: string]: never }) => {
     request('user', 'patch')
       .setRouteParams(`${record._id}`)
@@ -10,9 +9,15 @@ export const userColumns = (onEditClick: (params: { [key: string]: never }) => v
       .call()
   }
   const array: any[] = [
+    {
+      title: "ID",
+      dataIndex: "_id",
+      key: "_id",
+    },
     { title: "Name", dataIndex: "name" },
     { title: "Email", dataIndex: "email" },
     { title: "Mobile no.", dataIndex: "mobile_no" },
+    { title: "Role", dataIndex: "role", render: (_: string) => _.toUpperCase() },
     { title: "Address", dataIndex: "address", },
   ];
   if (!hideActions) {
@@ -20,7 +25,12 @@ export const userColumns = (onEditClick: (params: { [key: string]: never }) => v
       title: "Action",
       render: (_: string, record: { [key: string]: never }) => (
         <div className="flex gap-4">
-          <EditOutlined onClick={() => onEditClick(record)} size={25} />
+          <Button onClick={() => onViewClick(record)}>
+            View
+          </Button>
+          <Button onClick={() => onEditClick(record)}>
+            Edit
+          </Button>
           <Switch
             onChange={() => onSwithClick(record)}
             defaultValue={record.status}

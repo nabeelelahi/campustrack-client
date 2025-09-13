@@ -2,7 +2,7 @@ import React from "react";
 function Authlayout({ children, heading, subheading }: any) {
   return (
     <div className="grid lg:grid-cols-2 min-h-screen">
-      <div className="flex justify-center items-center bg-[#333333]">
+      <div className="flex justify-center items-center bg-[#084734]">
         {/* <img
           className="h-[25vh] object-cover hidden lg:block"
           src="/images/login-logo.png"

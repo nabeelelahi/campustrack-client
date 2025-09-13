@@ -1,23 +1,20 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./app/Home";
 import Settings from "./app/Setting";
 import Login from "./app/Auth/login";
 import Forgotpassword from "./app/Auth/forgot-password";
 import Otp from "./app/Auth/otp";
 import Resetpassword from "./app/Auth/reset-password";
-import NotificationManagment from "./app/NotificationManagment";
-import UserManagment from "./app/UserManagment";
-import Article from "./app/ArticleManagement";
-import Class from "./app/ClassManagement";
-import DocGuide from "./app/DocGuideManagement";
-import Passport from "./app/PassportManagement";
-import QuestionAnswer from "./app/QuestionAnswer";
 import TeacherDashboard from "./app/TeacherDashboard";
 import ClassDetails from "./app/ClassDetails";
 import StaffDashboard from "./app/StaffDashboard";
 import ParentDashboard from "./app/ParentDashboard";
 import StudentDashboard from "./app/StudentDashboard";
+import StudentDetail from "./app/StudentDetails";
+import AdminDashboard from "./app/AdminDashboard";
+import StaffDetails from "./app/StaffDetails";
+import TeacherDetails from "./app/TeacherDetails";
+import ParentDetails from "./app/ParentDetails";
 
 const App: React.FC = () => {
   return (
@@ -27,20 +24,17 @@ const App: React.FC = () => {
       <Route path="/forgot-password" element={<Forgotpassword />} />
       <Route path="/otp" element={<Otp />} />
       <Route path="/reset-password" element={<Resetpassword />} />
-      <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/super-admin/dashboard" element={<AdminDashboard />} />
       <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
       <Route path="/staff/dashboard" element={<StaffDashboard />} />
       <Route path="/parent/dashboard" element={<ParentDashboard />} />
       <Route path="/student/dashboard" element={<StudentDashboard />} />
-      <Route path="/users" element={<UserManagment />} />
-      <Route path="/articles" element={<Article />} />
-      <Route path="/classes" element={<Class />} />
+      <Route path="/student/:_id" element={<StudentDetail />} />
+      <Route path="/parent/:_id" element={<ParentDetails />} />
+      <Route path="/teacher/:_id" element={<TeacherDetails />} />
+      <Route path="/staff/:_id" element={<StaffDetails />} />
       <Route path="/class/:_id" element={<ClassDetails />} />
-      <Route path="/doc-guide" element={<DocGuide />} />
-      <Route path="/passports" element={<Passport />} />
       <Route path="/settings" element={<Settings />} />
-      <Route path="/notification" element={<NotificationManagment />} />
-      <Route path="/classes/:_id" element={<QuestionAnswer />} />
     </Routes>
   );
 };

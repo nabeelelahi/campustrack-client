@@ -1,9 +1,7 @@
-import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { request } from "../../repositories";
-import { Button, Image, Switch } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Switch } from "antd";
 
-export const classColumns = (onEditClick: (params: { [key: string]: never }) => void) => {
+export const classColumns = (onEditClick: (params: { [key: string]: never }) => void, onViewClick: (params: any) => void) => {
   const onSwithClick = (record: { [key: string]: never }) => {
     request('class', 'patch')
       .setRouteParams(`${record._id}`)
@@ -12,20 +10,37 @@ export const classColumns = (onEditClick: (params: { [key: string]: never }) => 
   }
   return [
     {
+      title: "ID",
+      dataIndex: "_id",
+      key: "_id",
+    },
+    {
       title: "Name",
       dataIndex: "name",
       key: "name",
+    },
+    {
+      title: "Total Students",
+      dataIndex: "students",
+      key: "students",
+      render: (_: any[]) => _.length
+    },
+    {
+      title: "Teacher",
+      dataIndex: "teacher",
+      key: "teacher",
+      render: (_: any) => _.name
     },
     {
       title: "Action",
       key: "_id",
       render: (_: string, record: { [key: string]: never }) => (
         <div className="flex items-center gap-4">
-          <Link to={`/class/${record._id}?title=${record.title}`} className="rounded-[8px] h-[40px] bg-[#333333] flex items-center roboto-medium px-4 text-white border-0 hover:!bg-[#333333]">
-            <EyeOutlined color="#fff" size={25} />
-          </Link>
-          <Button onClick={() => onEditClick(record)} className="rounded-[8px] h-[40px] bg-[#333333] roboto-medium px-4 text-white border-0 hover:!bg-[#333333]">
-            <EditOutlined color="#fff" size={25} />
+          <Button onClick={() => onViewClick(record)}>
+            View
+          </Button>
+          <Button onClick={() => onEditClick(record)}>
+            Edit
           </Button>
           <Switch
             onChange={() => onSwithClick(record)}

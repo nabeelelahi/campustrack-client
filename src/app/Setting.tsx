@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Form, Input, Button, Switch, Typography } from "antd";
 import { SaveOutlined } from "@ant-design/icons";
-import LayoutAdmin from "../component/partial/Layout/Admin";
+import {UserLayout} from "../component/partial/Layout/User";
 
 const { Title } = Typography;
 
@@ -12,7 +12,7 @@ const Settings: React.FC = () => {
   };
 
   return (
-    <LayoutAdmin>
+    <UserLayout>
       <div className="p-6 min-h-screen">
         <Title level={2} className="mb-4">
           Settings
@@ -50,7 +50,7 @@ const Settings: React.FC = () => {
           </Form>
         </Card>
       </div>
-    </LayoutAdmin>
+    </UserLayout>
   );
 };
 

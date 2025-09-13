@@ -1,20 +1,21 @@
 
 import { Button, Form, Modal } from 'antd'
 import BaseInput, { BaseInputProps } from '../../shared/BaseInput'
-import { passportForm } from '../../../config/form/passport'
-import { AddModalProps } from '../../../types';
-import useFormOperations from '../../../hooks/useFormOperations';
+import { menuItemForm } from '../../../config/form/menuItem'
+import useFormOperations from '../../../hooks/useFormOperations'
+import { AddModalProps } from '../../../types'
 
-function AddPassportModal(props: AddModalProps) {
+function AddMenuItem(props: AddModalProps) {
     const { open, cbCancel, updateData } = props;
-    const { handleFinish, loading } = useFormOperations({ ...props, url: 'passport' })
-
+    const { handleFinish, loading } = useFormOperations({ ...props, url: 'menu-item' })
     const onFinish = (values: Record<string, unknown>) => {
-        handleFinish(values)
+        console.log(values)
+        handleFinish({ ...values })
     }
+
     return (
         <Modal
-            title={'Add Passport'}
+            title={'Add Class'}
             open={open === 'post' || open === 'patch'}
             onCancel={cbCancel}
             footer={null}
@@ -25,7 +26,7 @@ function AddPassportModal(props: AddModalProps) {
                 onFinish={onFinish}
                 initialValues={updateData}
             >
-                {passportForm.map((item) => {
+                {menuItemForm.map((item) => {
                     return (
                         <Form.Item
                             label={item.label}
@@ -43,4 +44,4 @@ function AddPassportModal(props: AddModalProps) {
     )
 }
 
-export default AddPassportModal
+export default AddMenuItem

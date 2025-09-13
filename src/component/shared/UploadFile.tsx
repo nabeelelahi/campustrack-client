@@ -49,8 +49,8 @@ function UploadFile({ setFile, file, type = 'image' }: { setFile: Dispatch<SetSt
                                         <label
                                             htmlFor='file-upload'
                                         >
-                                            <div className='!h-[100px] !w-[100px] my-2 flex justify-center items-center border border-dashed border-[#333333]'>
-                                                <PlusOutlined style={{ fontSize: '35px', color: '#333333' }} />
+                                            <div className='!h-[100px] !w-[100px] my-2 flex justify-center items-center border border-dashed border-[#084734]'>
+                                                <PlusOutlined style={{ fontSize: '35px', color: '#084734' }} />
                                             </div>
                                         </label>
                                 }

@@ -10,7 +10,7 @@ import moment from "moment";
 import { useColors } from "../config/color";
 import CustomInput from "../component/shared/CustomInput";
 import CustomButton from "../component/shared/CustomButton";
-import LayoutAdmin from "../component/partial/Layout/Admin";
+import {UserLayout} from "../component/partial/Layout/User";
 
 interface ProfileProps {
   user: {
@@ -36,7 +36,7 @@ const Profile = ({ user }: ProfileProps) => {
   };
 
   return (
-    <LayoutAdmin>
+    <UserLayout>
       <div className="flex justify-center">
         <div
           className="w-full lg:w-1/2 bg-white p-8 rounded-[20px]"
@@ -137,7 +137,7 @@ const Profile = ({ user }: ProfileProps) => {
           </Form>
         </div>
       </div>
-    </LayoutAdmin>
+    </UserLayout>
   );
 };
 

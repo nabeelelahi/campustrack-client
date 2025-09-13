@@ -1,49 +1,27 @@
-import React from "react";
-import { Card, Table, Tabs, Statistic } from "antd";
-import { BellOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Card, Table, Tabs, Statistic, Button } from "antd";
 import { UserLayout } from "../component/partial/Layout/User";
+import { useRequest } from "../hooks/useRequest";
+import { useNavigate } from "react-router-dom";
+import { useColors } from "../config/color";
+import Loader from "../component/shared/Loader";
+import { transactionColumns } from "../config/table/transaction";
 
 const { TabPane } = Tabs;
 
 const StudentDashboard: React.FC = () => {
-    // Dummy Data
-    const todaysClasses = [
-        { key: "1", time: "9-10 AM", subject: "Programming Basics", teacher: "Mr. Smith", status: "Ongoing" },
-        { key: "2", time: "10-11 AM", subject: "Data Structures", teacher: "Ms. Jane", status: "Upcoming" },
-        { key: "3", time: "12-1 PM", subject: "Mathematics", teacher: "Dr. Ali", status: "Upcoming" },
-    ];
-
-    const attendanceTrend = [
-        { month: "Jan", value: 85 },
-        { month: "Feb", value: 78 },
-        { month: "Mar", value: 82 },
-        { month: "Apr", value: 88 },
-        { month: "May", value: 80 },
-    ];
-
-    const attendanceRecords = [
-        { key: "1", date: "2025-09-01", subject: "Programming Basics", status: "Present" },
-        { key: "2", date: "2025-09-02", subject: "Data Structures", status: "Absent" },
-        { key: "3", date: "2025-09-03", subject: "Mathematics", status: "Present" },
-    ];
-
-    const cafeteriaRecords = [
-        { key: "1", date: "2025-09-01", items: "Burger, Fries", amount: "$4.0" },
-        { key: "2", date: "2025-09-02", items: "Pizza, Coke", amount: "$5.5" },
-    ];
-
-    const notifications = [
-        { key: "1", message: "⚠️ Low attendance in Mathematics (68%)" },
-        { key: "2", message: "📢 Midterm exams start from Oct 10" },
-    ];
-
-    // Table Columns
-    const classColumns = [
-        { title: "Time", dataIndex: "time", key: "time" },
-        { title: "Subject", dataIndex: "subject", key: "subject" },
-        { title: "Teacher", dataIndex: "teacher", key: "teacher" },
-        { title: "Status", dataIndex: "status", key: "status" },
-    ];
+    const navigate = useNavigate();
+    const [totalSales, setTotalSales] = useState<number>(0)
+    const { data, loading } = useRequest<any[]>('class?limit=1000', 'GET', { type: 'mount' });
+    const { loading: transactionLoading, data: transactions } = useRequest<any[]>(
+        'order',
+        'GET',
+        {
+            type: 'mount',
+            params: { limit: 100 }
+        }
+    )
+    const colors = useColors();
 
     const attendanceColumns = [
         { title: "Date", dataIndex: "date", key: "date" },
@@ -51,39 +29,54 @@ const StudentDashboard: React.FC = () => {
         { title: "Status", dataIndex: "status", key: "status" },
     ];
 
-    const cafeteriaColumns = [
-        { title: "Date", dataIndex: "date", key: "date" },
-        { title: "Items", dataIndex: "items", key: "items" },
-        { title: "Amount", dataIndex: "amount", key: "amount" },
-    ];
+    useEffect(() => {
+        // @ts-ignore
+        if (transactions?.length) {
+            // @ts-ignore
+            const total = transactions.reduce((sum, t) => sum + Number(t.price), 0);
+            setTotalSales(total)
+
+        }
+    }, [transactions])
+
 
     return (
         <UserLayout>
-            <div className="container mx-auto min-h-screen bg-white text-[#333333] p-6">
+            <div className="container mx-auto min-h-screen bg-white text-[#084734] p-6">
                 {/* Overview Stats */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
                     <Card className="shadow-md">
                         <Statistic title="Attendance %" value="82%" />
                     </Card>
                     <Card className="shadow-md">
-                        <Statistic title="Cafeteria Balance" value="$20.00" />
+                        <Statistic title="Cafeteria Spending" value={`${totalSales} PKR`} />
                     </Card>
                     <Card className="shadow-md">
-                        <Statistic title="Classes Today" value={3} />
+                        <Statistic title="Enrolled Classes" value={data?.length} />
                     </Card>
                 </div>
 
                 {/* Tabs */}
                 <Tabs defaultActiveKey="1">
                     {/* Today’s Classes */}
-                    <TabPane tab="📚 Today’s Classes" key="1">
+                    <TabPane tab="📚 Classes Enrolled" key="1">
                         <Card className="shadow-md">
-                            <Table
-                                dataSource={todaysClasses}
-                                columns={classColumns}
-                                pagination={false}
-                                bordered
-                            />
+                            {
+                                loading ?
+                                    <Loader />
+                                    :
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {
+                                            data?.map((cls) => (
+                                                <Card key={cls._id} className="shadow-md hover:shadow-lg transition" style={{ boxShadow: colors.boxshadow, backgroundColor: colors.backgroundColor }}>
+                                                    <h2 className="font-semibold text-lg">{cls._id.substring(0, 6)} - {cls.name}</h2>
+                                                    <p className="mb-3">{cls.students.length} Students</p>
+                                                    <Button onClick={() => navigate(`/class/${cls._id}`, { state: cls })} className="text-white bg-[#084734] px-3 py-2 rounded">View Details</Button>
+                                                </Card>
+                                            ))
+                                        }
+                                    </div>
+                            }
                         </Card>
                     </TabPane>
 
@@ -95,7 +88,7 @@ const StudentDashboard: React.FC = () => {
                         </Card>
                         <Card className="shadow-md">
                             <Table
-                                dataSource={attendanceRecords}
+                                dataSource={[]}
                                 columns={attendanceColumns}
                                 pagination={{ pageSize: 5 }}
                                 bordered
@@ -104,27 +97,28 @@ const StudentDashboard: React.FC = () => {
                     </TabPane>
 
                     {/* Cafeteria */}
-                    <TabPane tab="🍴 Cafeteria" key="3">
+                    <TabPane tab="🍴 Cafeteria Bills" key="3">
                         <Card className="shadow-md">
-                            <Table
-                                dataSource={cafeteriaRecords}
-                                columns={cafeteriaColumns}
-                                pagination={{ pageSize: 5 }}
-                                bordered
-                            />
+                            {
+                                transactionLoading ?
+                                    <Loader />
+                                    :
+                                    <Table
+                                        // @ts-ignore
+                                        dataSource={transactions}
+                                        columns={transactionColumns}
+                                        className={`w-full overflow-auto table-light-mode`}
+                                        style={{
+                                            color: colors.TextColor,
+                                            backgroundColor: colors.backgroundColor,
+                                            borderColor: colors.boxshadow,
+                                        }}
+                                        scroll={{ x: 800 }}
+                                    />
+                            }
                         </Card>
                     </TabPane>
 
-                    {/* Notifications */}
-                    <TabPane tab={<span><BellOutlined /> Notifications</span>} key="4">
-                        <Card className="shadow-md">
-                            <ul className="list-disc pl-6">
-                                {notifications.map((note) => (
-                                    <li key={note.key} className="mb-2">{note.message}</li>
-                                ))}
-                            </ul>
-                        </Card>
-                    </TabPane>
                 </Tabs>
             </div>
         </UserLayout>
