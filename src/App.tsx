@@ -15,6 +15,9 @@ import AdminDashboard from "./app/AdminDashboard";
 import StaffDetails from "./app/StaffDetails";
 import TeacherDetails from "./app/TeacherDetails";
 import ParentDetails from "./app/ParentDetails";
+import Scan  from "./app/Scan";
+import { QRCodePage } from "./app/QRCode";
+import VerifyQR from "./app/VerifyQR";
 
 const App: React.FC = () => {
   return (
@@ -35,6 +38,9 @@ const App: React.FC = () => {
       <Route path="/staff/:_id" element={<StaffDetails />} />
       <Route path="/class/:_id" element={<ClassDetails />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/scan" element={<Scan />} />
+      <Route path="/qr-code/:_id" element={<QRCodePage />} />
+      <Route path="/qr/:action/:_id" element={<VerifyQR />} />
     </Routes>
   );
 };

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { request } from "../../repositories";
 import { Button, Switch } from "antd";
 
@@ -8,6 +9,7 @@ export const classColumns = (onEditClick: (params: { [key: string]: never }) => 
       .setBody({ status: !record.status }, 'json')
       .call()
   }
+  // const navigate = useNavigate();
   return [
     {
       title: "ID",
@@ -36,10 +38,13 @@ export const classColumns = (onEditClick: (params: { [key: string]: never }) => 
       key: "_id",
       render: (_: string, record: { [key: string]: never }) => (
         <div className="flex items-center gap-4">
-          <Button onClick={() => onViewClick(record)}>
+          <Link className="ant-btn rounded px-3 py-1" to={`/qr-code/${record._id}`}>
+            QR's
+          </Link>
+          <Button className="py-1" onClick={() => onViewClick(record)}>
             View
           </Button>
-          <Button onClick={() => onEditClick(record)}>
+          <Button className="py-1" onClick={() => onEditClick(record)}>
             Edit
           </Button>
           <Switch

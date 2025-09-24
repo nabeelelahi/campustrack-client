@@ -5,6 +5,7 @@ import { useRequest } from "../hooks/useRequest";
 import { useColors } from "../config/color";
 import Loader from "../component/shared/Loader";
 import { transactionColumns } from "../config/table/transaction";
+import { attendanceColumns } from "../config/table/attendance";
 
 const { TabPane } = Tabs;
 
@@ -24,6 +25,14 @@ export default function StudentDetail() {
         {
             type: 'mount',
             params: { student: _id, limit: 100 }
+        }
+    )
+    const { loading: attendanceLoading, data: attendance } = useRequest<any[]>(
+        'attendance',
+        'GET',
+        {
+            type: 'mount',
+            params: { limit: 100, student: _id }
         }
     )
 
@@ -79,11 +88,23 @@ export default function StudentDetail() {
                         </TabPane>
 
                         <TabPane tab="Check Ins/Outs" key="3">
-                            <div className="p-4">
-                                {/* Check In/Out Content */}
-                                <h2 className="text-lg font-medium mb-2">Check Ins/Outs</h2>
-                                <p className="text-gray-600">Show student entry and exit logs here.</p>
-                            </div>
+                            {
+                                attendanceLoading ?
+                                    <Loader />
+                                    :
+                                    <Table
+                                        // @ts-ignore
+                                        dataSource={attendance}
+                                        columns={attendanceColumns}
+                                        className={`w-full overflow-auto table-light-mode`}
+                                        style={{
+                                            color: colors.TextColor,
+                                            backgroundColor: colors.backgroundColor,
+                                            borderColor: colors.boxshadow,
+                                        }}
+                                        scroll={{ x: 800 }}
+                                    />
+                            }
                         </TabPane>
                     </Tabs>
                 </Card>

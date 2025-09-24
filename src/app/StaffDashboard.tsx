@@ -33,7 +33,7 @@ const StaffDashboard: React.FC = () => {
             // @ts-ignore
             body: { ...value, price },
             cbSuccess: (res) => {
-                setTransactions((p: any) => [res, ...p])
+                setTransactions((p: any) => [res.data, ...p])
                 form.resetFields()
                 setPrice(0)
             }
@@ -74,85 +74,119 @@ const StaffDashboard: React.FC = () => {
 
     return (
         <UserLayout>
-            <div className="container mx-auto min-h-screen bg-white text-[#084734] p-6">
-                {/* Header Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                    <Card className="shadow-md">
-                        <Statistic title="Total Orders" value={(transactions?.length ?? 0)} />
-                    </Card>
-                    <Card className="shadow-md">
-                        <Statistic title="Total Sales" value={`${totalSales} PKR`} />
-                    </Card>
-                </div>
-
-                {/* Tabs */}
-                <Tabs defaultActiveKey="1">
-                    {/* Point of Sale */}
-                    <TabPane tab="💳 Point of Sale" key="1">
+                <div className="container mx-auto min-h-screen bg-white text-[#084734] p-6">
+                    {/* Header Stats */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
                         <Card className="shadow-md">
-                            <h2 className="font-semibold mb-4">Record Transaction</h2>
-                            {
-                                (studentLoading || menuItemLoading) ?
-                                    <Loader />
-                                    :
-                                    <Form form={form} onFinish={onFinish} className="grid grid-cols-2 gap-x-4">
-                                        <Form.Item name="student" rules={[{ required: true, message: 'Please select a student!' }]}>
-                                            <Select placeholder="Select Items" className="w-2/3">
-                                                {/* @ts-ignore */}
-                                                {students?.map((item) => (
-                                                    <Option key={item.key} value={item._id}>
-                                                        {item.name} ({item._id})
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                        <Form.Item name="items" rules={[{ required: true, message: 'Please select an item!' }]}>
-                                            <Select
-                                                mode="multiple"
-                                                placeholder="Select Items"
-                                                className="w-2/3"
-                                                onChange={(value) => {
-                                                    const total = ((menuItems ?? []) as any[])
-                                                        ?.filter((item: any) => ((value ?? []) as any[]).includes(item._id))
-                                                        .reduce((sum: number, item: any) => sum + Number(item.price), 0);
-                                                    setPrice(total)
-                                                }}
-                                            >
-                                                {/* @ts-ignore */}
-                                                {menuItems?.map((item) => (
-                                                    <Option key={item.key} value={item._id}>
-                                                        {item.name} (${item.price})
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                        <div className="col-span-2 flex justify-between items-center">
-                                            <h3 className="font-bold">Total: {price} PKR</h3>
-                                            <Button loading={formLoading} htmlType="submit" type="primary" className="bg-[#084734] text-white">
-                                                Submit Transaction
-                                            </Button>
-                                        </div>
-                                    </Form>
-                            }
-
+                            <Statistic title="Total Orders" value={(transactions?.length ?? 0)} />
                         </Card>
-                    </TabPane>
-
-                    {/* Menu Management */}
-                    <TabPane tab="🍔 Menu Management" key="2">
                         <Card className="shadow-md">
-                            {
-                                menuItemLoading ?
-                                    <Loader />
-                                    :
-                                    <>
-                                        <div className="flex justify-between items-center mb-4">
-                                            <h2 className="font-semibold">Manage Menu</h2>
-                                            <Button onClick={onButtonClick} icon={<PlusOutlined />} className="bg-[#084734] text-white">
-                                                Add Item
-                                            </Button>
-                                        </div>
+                            <Statistic title="Total Sales" value={`${totalSales} PKR`} />
+                        </Card>
+                    </div>
+
+                    {/* Tabs */}
+                    <Tabs defaultActiveKey="1">
+                        {/* Point of Sale */}
+                        <TabPane tab="💳 Point of Sale" key="1">
+                            <Card className="shadow-md">
+                                <h2 className="font-semibold mb-4">Record Transaction</h2>
+                                {
+                                    (studentLoading || menuItemLoading) ?
+                                        <Loader />
+                                        :
+                                        <Form form={form} onFinish={onFinish} className="grid grid-cols-2 gap-x-4">
+                                            <Form.Item name="student" rules={[{ required: true, message: 'Please select a student!' }]}>
+                                                <Select placeholder="Select Items" className="w-2/3">
+                                                    {/* @ts-ignore */}
+                                                    {students?.map((item) => (
+                                                        <Option key={item.key} value={item._id}>
+                                                            {item.name} ({item._id})
+                                                        </Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                            <Form.Item name="items" rules={[{ required: true, message: 'Please select an item!' }]}>
+                                                <Select
+                                                    mode="multiple"
+                                                    placeholder="Select Items"
+                                                    className="w-2/3"
+                                                    onChange={(value) => {
+                                                        const total = ((menuItems ?? []) as any[])
+                                                            ?.filter((item: any) => ((value ?? []) as any[]).includes(item._id))
+                                                            .reduce((sum: number, item: any) => sum + Number(item.price), 0);
+                                                        setPrice(total)
+                                                    }}
+                                                >
+                                                    {/* @ts-ignore */}
+                                                    {menuItems?.map((item) => (
+                                                        <Option key={item.key} value={item._id}>
+                                                            {item.name} (${item.price})
+                                                        </Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                            <div className="col-span-2 flex justify-between items-center">
+                                                <h3 className="font-bold">Total: {price} PKR</h3>
+                                                <Button loading={formLoading} htmlType="submit" type="primary" className="bg-[#084734] text-white">
+                                                    Submit Transaction
+                                                </Button>
+                                            </div>
+                                        </Form>
+                                }
+
+                            </Card>
+                        </TabPane>
+
+                        {/* Menu Management */}
+                        <TabPane tab="🍔 Menu Management" key="2">
+                            <Card className="shadow-md">
+                                {
+                                    menuItemLoading ?
+                                        <Loader />
+                                        :
+                                        <>
+                                            <div className="flex justify-between items-center mb-4">
+                                                <h2 className="font-semibold">Manage Menu</h2>
+                                                <Button onClick={onButtonClick} icon={<PlusOutlined />} className="bg-[#084734] text-white">
+                                                    Add Item
+                                                </Button>
+                                            </div>
+                                            <Table
+                                                className={`w-full overflow-auto table-light-mode`}
+                                                style={{
+                                                    color: colors.TextColor,
+                                                    backgroundColor: colors.backgroundColor,
+                                                    borderColor: colors.boxshadow,
+                                                }}
+                                                scroll={{ x: 800 }}
+                                                dataSource={(menuItems ?? []) as any[]}
+                                                columns={menuColumns(onEditClick)}
+                                            /></>
+                                }
+                            </Card>
+                            {(open === 'post' || open === 'patch') && (
+                                <AddMenuItem
+                                    open={open}
+                                    cbCancel={cbCancel}
+                                    cbSuccess={cbSuccess}
+                                    updateData={updateData as { [key: string]: never; }}
+                                />
+                            )}
+                        </TabPane>
+
+                        {/* Transaction History */}
+                        <TabPane tab="📜 Transaction History" key="3">
+                            <h2 className="font-semibold">Recent Transactions</h2>
+                            <Card className="shadow-md mb-4">
+                                {
+                                    transactionLoading ?
+                                        <Loader />
+                                        :
                                         <Table
+                                            // @ts-ignore
+                                            dataSource={transactions}
+                                            columns={transactionColumns}
                                             className={`w-full overflow-auto table-light-mode`}
                                             style={{
                                                 color: colors.TextColor,
@@ -160,46 +194,12 @@ const StaffDashboard: React.FC = () => {
                                                 borderColor: colors.boxshadow,
                                             }}
                                             scroll={{ x: 800 }}
-                                            dataSource={(menuItems ?? []) as any[]}
-                                            columns={menuColumns(onEditClick)}
-                                        /></>
-                            }
-                        </Card>
-                        {(open === 'post' || open === 'patch') && (
-                            <AddMenuItem
-                                open={open}
-                                cbCancel={cbCancel}
-                                cbSuccess={cbSuccess}
-                                updateData={updateData as { [key: string]: never; }}
-                            />
-                        )}
-                    </TabPane>
-
-                    {/* Transaction History */}
-                    <TabPane tab="📜 Transaction History" key="3">
-                        <h2 className="font-semibold">Recent Transactions</h2>
-                        <Card className="shadow-md mb-4">
-                            {
-                                transactionLoading ?
-                                    <Loader />
-                                    :
-                                    <Table
-                                        // @ts-ignore
-                                        dataSource={transactions}
-                                        columns={transactionColumns}
-                                        className={`w-full overflow-auto table-light-mode`}
-                                        style={{
-                                            color: colors.TextColor,
-                                            backgroundColor: colors.backgroundColor,
-                                            borderColor: colors.boxshadow,
-                                        }}
-                                        scroll={{ x: 800 }}
-                                    />
-                            }
-                        </Card>
-                    </TabPane>
-                </Tabs>
-            </div>
+                                        />
+                                }
+                            </Card>
+                        </TabPane>
+                    </Tabs>
+                </div>
         </UserLayout>
     );
 };

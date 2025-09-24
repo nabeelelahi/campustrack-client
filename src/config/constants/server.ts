@@ -1,6 +1,6 @@
 export default {
     // local
-    baseUrl: "http://localhost:3000/api",
+    baseUrl: "http://192.168.1.109:3000/api",
     // production
     imageUrl: function (url: string): string {
         return this.baseUrl + url

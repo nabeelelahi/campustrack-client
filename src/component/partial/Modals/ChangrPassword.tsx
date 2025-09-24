@@ -7,7 +7,7 @@ import { useRequest } from '../../../hooks/useRequest'
 
 function ChangePassword(props: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>> }) {
     const { open, setOpen } = props;
-    const { execute, loading } = useRequest('user/change-password', 'POST', { type: 'mount' })
+    const { execute, loading } = useRequest('user/change-password', 'POST', { type: 'delay' })
     const onFinish = (values: Record<string, string>) => {
         execute({
             body: values,

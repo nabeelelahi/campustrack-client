@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
     "@types/react-icons": "^3.0.0",
+    "@yudiel/react-qr-scanner": "^2.3.1",
     "antd": "^5.20.2",
     "axios": "^1.7.7",
     "crypto-js": "^4.2.0",
@@ -23,7 +24,10 @@
     "react-icons": "^5.4.0",
     "react-minimal-pie-chart": "^9.1.0",
     "react-phone-number-input": "^3.4.10",
+    "react-qr-code": "^2.0.18",
+    "react-qr-reader": "^3.0.0-beta-1",
     "react-router-dom": "^6.26.1",
+    "react-zxing": "^2.1.0",
     "reactjs-otp-input": "^2.0.10",
     "recharts": "^2.12.7"
   },

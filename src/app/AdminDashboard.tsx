@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Table, Tabs, Statistic, Button } from "antd";
+import { Card, Table, Tabs, Statistic, Button, Select } from "antd";
 import { FilePdfOutlined, FileExcelOutlined, PlusOutlined } from "@ant-design/icons";
 import { UserLayout } from "../component/partial/Layout/User";
 import useTableOperations from "../hooks/useTableOperations";
@@ -33,6 +33,7 @@ const AdminDashboard: React.FC = () => {
         cbCancel,
         cbSuccess,
         updateData,
+        onFilterChange
     } = useTableOperations('user')
     const {
         open: classOpen,
@@ -42,7 +43,7 @@ const AdminDashboard: React.FC = () => {
         loading: classLoading,
         cbCancel: classCbCancel,
         cbSuccess: classCbSuccess,
-        updateData: classUpdateData
+        updateData: classUpdateData,
     } = useTableOperations('class')
     const {
         data: menu,
@@ -64,6 +65,11 @@ const AdminDashboard: React.FC = () => {
 
     const onUserViewClick = (record: any) => {
         navigate(`/${record.role}/${record._id}`, { state: record })
+    }
+
+    const onRoleChange = (value: string) => {
+        console.log(value)
+        onFilterChange({ role: value })
     }
 
     useEffect(() => {
@@ -127,9 +133,22 @@ const AdminDashboard: React.FC = () => {
                         <Card className="shadow-md">
                             <div className="flex justify-between items-center mb-4">
                                 <h2 className="font-semibold">Manage Users</h2>
-                                <Button onClick={onButtonClick} icon={<PlusOutlined />} className="bg-[#333333] text-white">
-                                    Add User
-                                </Button>
+                                <div>
+                                    <Select
+                                        options={[
+                                            { label: 'Teacher', value: 'teacher' },
+                                            { label: 'Student', value: 'student' },
+                                            { label: 'Parent', value: 'parent' },
+                                            { label: 'Staff', value: 'staff' },
+                                        ]}
+                                        onChange={onRoleChange}
+                                        placeholder='Please select a role'
+                                        className="mx-2"
+                                    />
+                                    <Button onClick={onButtonClick} icon={<PlusOutlined />} className="bg-[#333333] text-white">
+                                        Add User
+                                    </Button>
+                                </div>
                             </div>
                             {
                                 loading ?
@@ -144,7 +163,7 @@ const AdminDashboard: React.FC = () => {
                                         }}
                                         // @ts-ignore
                                         dataSource={data}
-                                        columns={userColumns(onEditClick,onUserViewClick, false)}
+                                        columns={userColumns(onEditClick, onUserViewClick, false)}
                                         pagination={{ pageSize: 10 }}
                                         bordered
                                     />
@@ -201,7 +220,7 @@ const AdminDashboard: React.FC = () => {
                     {/* Cafeteria Tab */}
                     <TabPane tab="🍴 Menu" key="4">
                         <Card className="shadow-md">
-                        <h2 className="font-semibold mb-4">Menu Items</h2>
+                            <h2 className="font-semibold mb-4">Menu Items</h2>
                             {
                                 menuLoading ?
                                     <Loader />
